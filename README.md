@@ -16,7 +16,7 @@
 
 ```
 git clone https://github.com/Si-Ki/dwm-v
-cd dwm
+cd dwm-v
 sudo make install
 ```
 
