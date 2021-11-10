@@ -51,8 +51,10 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
+	{ "transmission-gtk", NULL, NULL,	    1 << 8,	  0,	       0,	  0,	    -1 },
+	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    -1 },
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
-	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
+	{ "brave-browser",    NULL,       NULL,             1 << 1,       0,           0,         0,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
 	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
 };
@@ -159,13 +161,13 @@ static Key keys[] = {
 	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
-	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
+	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
 	{ MODKEY,			XK_r,		spawn,		SHCMD(TERMINAL " -e ranger") },
-	{ MODKEY|ShiftMask,		XK_r,		spawn,		SHCMD(TERMINAL " -e htop") },
+	{ ControlMask,			XK_Escape,	spawn,		SHCMD(TERMINAL " -e htop") },
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[1]} }, /* bstack */
 	{ MODKEY,			XK_y,		setlayout,	{.v = &layouts[2]} }, /* spiral */
