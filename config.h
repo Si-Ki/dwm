@@ -16,13 +16,13 @@ static int swallowfloating    = 0;        /* 1 means swallow floating windows by
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "Source code pro:size=10","JoyPixels:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=10:antialias=true:autohint=true"  };
+static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=10:antialias=true:autohint=true"  };
 static char normbgcolor[]           = "#272822";
-static char normbordercolor[]       = "#272822";
-static char normfgcolor[]           = "#bbbbbb";
+static char normbordercolor[]       = "#ffef00";
+static char normfgcolor[]           = "#00ffff";
 static char selfgcolor[]            = "#272822";
-static char selbordercolor[]        = "#adff2f";
-static char selbgcolor[]            = "#5E81AC";
+static char selbordercolor[]        = "#00ffff";
+static char selbgcolor[]            = "#00ffff";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -42,7 +42,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -51,7 +51,9 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
+	{ "vlc",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    -1 },
 	{ "transmission-gtk", NULL, NULL,	    1 << 8,	  0,	       0,	  0,	    -1 },
+	{ "Steam",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    -1 },
 	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    -1 },
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
 	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        -1 },
