@@ -16,7 +16,7 @@ static int swallowfloating    = 0;        /* 1 means swallow floating windows by
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=10:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=10:antialias=true:autohint=true"  };
+static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=13:antialias=true:autohint=true", "fa-regular-400:pixelsize=13:antialias=true:autohint=true", "fa-brands-400:pixelsize=13:antialias=true:autohint=true", "fa-solid-900:pixelsize=13:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -42,7 +42,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6", "7", "8", "9" };
+static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6", "7", "8", "9: " };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -51,10 +51,12 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
+	{ "Spotify",     NULL,       NULL,	    1 << 8,       0,           0,         0,        -1 },
 	{ "vlc",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    -1 },
-	{ "transmission-gtk", NULL, NULL,	    1 << 8,	  0,	       0,	  0,	    -1 },
+	{ "transmission", NULL, NULL,	    1 << 8,	  0,	       0,	  0,	    -1 },
 	{ "Steam",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    -1 },
 	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    -1 },
+	{ "discord", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    -1 },
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
 	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        -1 },
 	{ "obs",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
@@ -73,7 +75,7 @@ static const Layout layouts[] = {
 	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
-	{ "",	spiral },		    /* Fibonacci spiral */
+	{ "",	spiral },		    /* Fibonacci spiral */
 	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
 
 	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
@@ -112,8 +114,8 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color0",		STRING,	&normbordercolor },
-		{ "color8",		STRING,	&selbordercolor },
+		{ "color3",		STRING,	&normbordercolor },
+		{ "color5",		STRING,	&selbordercolor },
 		{ "color0",		STRING,	&normbgcolor },
 		{ "color4",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
@@ -162,7 +164,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
-	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("Spotify") },
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
@@ -194,7 +196,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -bw 3 -l 13 -g 3 -p 'Run: ' ") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c  -l 13 -p 'Run: ' ") },
 	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
@@ -264,7 +266,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl prev") },
+	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next") },
 	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD(TERMINAL " -e ncplayerctlpp") },
@@ -274,7 +276,7 @@ static Key keys[] = {
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("Brave-browser") },
 	{ 0, XF86XK_DOS,		spawn,		SHCMD(TERMINAL) },
-	{ MODKEY,	XK_Escape,	spawn,		SHCMD("xset dpms force off; slock; playerctl pause; pauseallmpv") },
+	{ MODKEY,	XK_Escape,	spawn,		SHCMD("slock & xset dpms force off;") },
 	{ 0, XF86XK_TaskPane,		spawn,		SHCMD(TERMINAL " -e htop") },
 	{ 0, XF86XK_Mail,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ 0, XF86XK_MyComputer,		spawn,		SHCMD(TERMINAL " -e lf /") },
@@ -331,3 +333,4 @@ static Button buttons[] = {
 	{ ClkTagBar,		0,		Button5,	shiftview,	{.i = 1} },
 	{ ClkRootWin,		0,		Button2,	togglebar,	{0} },
 };
+
