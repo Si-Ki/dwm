@@ -6,17 +6,17 @@
 #define BROWSER "brave"
 
 /* appearance */
-static unsigned int borderpx  = 3;        /* border pixel of windows */
+static unsigned int borderpx  = 0;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 8;       /* horiz inner gap between windows */
-static unsigned int gappiv    = 8;       /* vert inner gap between windows */
-static unsigned int gappoh    = 8;       /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 8;       /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 8;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 8;        /* vert inner gap between windows */
+static unsigned int gappoh    = 8;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 8;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=13:antialias=true:autohint=true", "fa-regular-400:pixelsize=13:antialias=true:autohint=true", "fa-brands-400:pixelsize=13:antialias=true:autohint=true", "fa-solid-900:pixelsize=13:antialias=true:autohint=true" };
+static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=13:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -33,7 +33,7 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "100x25", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -42,7 +42,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6", "7", "8", "9: " };
+static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6: ", "7", "8", "9: " };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -52,8 +52,10 @@ static const Rule rules[] = {
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
 	{ "Spotify",     NULL,       NULL,	    1 << 8,       0,           0,         0,        -1 },
-	{ "vlc",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    -1 },
-	{ "transmission", NULL, NULL,	    1 << 8,	  0,	       0,	  0,	    -1 },
+	{ "mpv",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    -1 },
+	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,	  0,	       0,	  0,	    -1 },
+	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,	  0,	       0,	  0,	    -1 },
+	{ "csgo_linux64",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    -1 },
 	{ "Steam",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    -1 },
 	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    -1 },
 	{ "discord", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    -1 },
@@ -117,9 +119,9 @@ ResourcePref resources[] = {
 		{ "color3",		STRING,	&normbordercolor },
 		{ "color5",		STRING,	&selbordercolor },
 		{ "color0",		STRING,	&normbgcolor },
-		{ "color4",		STRING,	&normfgcolor },
+		{ "color10",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
-		{ "color4",		STRING,	&selbgcolor },
+		{ "color10",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
 		{ "showbar",		INTEGER, &showbar },
@@ -142,7 +144,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	/* { MODKEY,		XK_Escape,	spawn,	SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_h,	spawn,	SHCMD("dmenuhandler") },
 	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	TAGKEYS(			XK_1,		0)
@@ -164,7 +166,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
-	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("Spotify") },
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("spotify") },
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
@@ -196,7 +198,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c  -l 13 -p 'Run: ' ") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -i -l 13 -p 'Run: ' ") },
 	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
@@ -256,10 +258,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_space,	zoom,		{0} },
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
 
-	{ MODKEY,				XK_Print,	spawn,		SHCMD("scrot -q 100'%Y/%m/%d.png' -e 'mv $f ~/Pictures/Screenshots/' ") },
-	{ ShiftMask,			XK_Print,	spawn,		SHCMD("scrot -sf -q 100'%Y/%m/%d.png' -e 'mv $f ~/Pictures/Screenshots/' ") },
+/*	{ ShiftMask,			XK_Print,	spawn,		SHCMD("miampick") }, */
 	{ MODKEY,			XK_Print,	spawn,		SHCMD("dmenurecord") },
-	{ MODKEY|ShiftMask,		XK_Print,	spawn,		SHCMD("scrot -s -q 100 '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'") },
+	{ MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("maimpick") },
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
