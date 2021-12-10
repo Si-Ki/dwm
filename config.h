@@ -23,22 +23,32 @@ static char normfgcolor[]           = "#00ffff";
 static char selfgcolor[]            = "#272822";
 static char selbordercolor[]        = "#00ffff";
 static char selbgcolor[]            = "#00ffff";
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+};
+
 typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "100x25", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spblue", "-g", "100x25", "-e", "bluetoothctl", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spmusic", "-g", "120x35", "-e", "anime -q best", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "spterm", "-g", "110x30", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spcalc",      spcmd2},
+	{"spblue",      spcmd1},
+	{"spmusic",      spcmd2},
+	{"spterm",	spcmd3},
 };
 
 /* tagging */
@@ -62,8 +72,9 @@ static const Rule rules[] = {
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
 	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        -1 },
 	{ "obs",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
-	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+	{ NULL,      "spblue",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
+	{ NULL,      "spmusic",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+	{ NULL,      "spterm",    NULL,       	    SPTAG(2),     1,           1,         0,        -1 },
 };
 
 /* layout(s) */
@@ -119,9 +130,9 @@ ResourcePref resources[] = {
 		{ "color3",		STRING,	&normbordercolor },
 		{ "color5",		STRING,	&selbordercolor },
 		{ "color0",		STRING,	&normbgcolor },
-		{ "color10",		STRING,	&normfgcolor },
+		{ "color4",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
-		{ "color10",		STRING,	&selbgcolor },
+		{ "color4",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
 		{ "showbar",		INTEGER, &showbar },
@@ -166,7 +177,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
-	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("spotify") },
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("maim -B -D -m 10 -s | xclip -selection clipboard -t image/png") },
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
@@ -209,10 +220,11 @@ static Key keys[] = {
 	{ MODKEY,			XK_l,		setmfact,      	{.f = +0.05} },
 	{ MODKEY,			XK_semicolon,	shiftview,	{ .i = 1 } },
 	{ MODKEY|ShiftMask,		XK_semicolon,	shifttag,	{ .i = 1 } },
-	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
+	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 0} },
+	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 2} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0} },
+	{ MODKEY|ShiftMask,		XK_a,		togglescratch,	{.ui = 1} },
 
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
