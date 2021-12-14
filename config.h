@@ -8,10 +8,10 @@
 /* appearance */
 static unsigned int borderpx  = 0;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 8;        /* horiz inner gap between windows */
-static unsigned int gappiv    = 8;        /* vert inner gap between windows */
-static unsigned int gappoh    = 8;        /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 8;        /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 1;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 1;        /* vert inner gap between windows */
+static unsigned int gappoh    = 1;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 1;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
@@ -23,18 +23,10 @@ static char normfgcolor[]           = "#00ffff";
 static char selfgcolor[]            = "#272822";
 static char selbordercolor[]        = "#00ffff";
 static char selbgcolor[]            = "#00ffff";
-static const unsigned int baralpha = 0xd0;
-static const unsigned int borderalpha = OPAQUE;
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
-};
-
-static const unsigned int alphas[][3]      = {
-	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 typedef struct {
@@ -42,12 +34,12 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spblue", "-g", "100x25", "-e", "bluetoothctl", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spmusic", "-g", "120x35", "-e", "anime -q best", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "splf", "-g", "120x35", "-e", "lf", NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "spterm", "-g", "110x30", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spblue",      spcmd1},
-	{"spmusic",      spcmd2},
+	{"splf",        spcmd2},
 	{"spterm",	spcmd3},
 };
 
@@ -73,7 +65,7 @@ static const Rule rules[] = {
 	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        -1 },
 	{ "obs",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
 	{ NULL,      "spblue",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ NULL,      "spmusic",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+	{ NULL,      "splf",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(2),     1,           1,         0,        -1 },
 };
 
@@ -130,9 +122,9 @@ ResourcePref resources[] = {
 		{ "color3",		STRING,	&normbordercolor },
 		{ "color5",		STRING,	&selbordercolor },
 		{ "color0",		STRING,	&normbgcolor },
-		{ "color4",		STRING,	&normfgcolor },
+		{ "color7",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
-		{ "color4",		STRING,	&selbgcolor },
+		{ "color7",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
 		{ "showbar",		INTEGER, &showbar },
@@ -207,7 +199,7 @@ static Key keys[] = {
 
 	{ MODKEY,			XK_a,		togglegaps,	{0} },
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
-	{ MODKEY,			XK_s,		togglesticky,	{0} },
+	/* { MODKEY,			XK_s,		togglesticky,	{0} }, */
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
 	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -i -l 13 -p 'Run: ' ") },
 	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu") },
@@ -224,7 +216,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 2} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_a,		togglescratch,	{.ui = 1} },
+	{ MODKEY,			XK_s,		togglescratch,	{.ui = 1} },
 
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
@@ -255,7 +247,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Page_Down,	shifttag,	{ .i = +1 } },
 	{ MODKEY,			XK_Insert,	spawn,		SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") },
 
-	{ MODKEY,			XK_F1,		spawn,		SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
 	{ MODKEY,			XK_F2,		spawn,		SHCMD("tutorialvids") },
 	{ MODKEY,			XK_F3,		spawn,		SHCMD("displayselect") },
 	{ MODKEY,			XK_F4,		spawn,		SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },
@@ -266,7 +257,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
 	{ MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },
 	{ MODKEY,			XK_F11,		spawn,		SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
-	{ MODKEY,			XK_F12,		spawn,		SHCMD("remaps & notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },
+	{ MODKEY,			XK_F12,		spawn,		SHCMD("checkup") },
 	{ MODKEY,			XK_space,	zoom,		{0} },
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
 
