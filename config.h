@@ -3,17 +3,16 @@
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
-#define BROWSER "brave"
 
 /* appearance */
-static unsigned int borderpx  = 0;        /* border pixel of windows */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 1;        /* horiz inner gap between windows */
-static unsigned int gappiv    = 1;        /* vert inner gap between windows */
-static unsigned int gappoh    = 1;        /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 1;        /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 5;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 5;        /* vert inner gap between windows */
+static unsigned int gappoh    = 5;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 5;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
+static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=13:antialias=true:autohint=true" };
@@ -44,7 +43,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6: ", "7", "8", "9: " };
+/* static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6: ", "7", "8", "9: " }; */
+static const char *tags[] = { "", "", "", "", "", "", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -54,15 +54,15 @@ static const Rule rules[] = {
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
 	{ "spotify",     NULL,       NULL,	    1 << 8,       0,           0,         0,        -1 },
-	{ "mpv",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    0 },
+	{ "mpv",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    1 },
 	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,	  0,	       0,	  0,	    -1 },
 	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,	  0,	       0,	  0,	    -1 },
-	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,	  0,	       0,	  0,	    1 },
-	{ "Steam",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    1 },
-	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    1 },
+	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,	  0,	       0,	  0,	    0 },
+	{ "Steam",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    0 },
+	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    0 },
 	{ "discord", NULL, NULL,	    	    1 << 4,	  0,	       0,	  0,	    -1 },
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
-	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        1 },
+	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        0 },
 	{ "Bitcoin-Qt",    NULL,       NULL,        1 << 8,       0,           0,         0,        -1 },
 	{ "obs",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
 	{ "openshot",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
@@ -72,7 +72,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static int nmaster     = 1;    /* number of clients in master area */
 static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
@@ -105,7 +105,7 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD,	XK_j,	ACTION##stack,	{.i = INC(+1) } }, \
 	{ MOD,	XK_k,	ACTION##stack,	{.i = INC(-1) } }, \
-	{ MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \
+	{ MOD,  XK_c,   ACTION##stack,  {.i = 0 } }, \
 	/* { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \ */
 	/* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
 	/* { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \ */
@@ -121,12 +121,12 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color3",		STRING,	&normbordercolor },
-		{ "color5",		STRING,	&selbordercolor },
-		{ "color0",		STRING,	&normbgcolor },
-		{ "color7",		STRING,	&normfgcolor },
-		{ "color0",		STRING,	&selfgcolor },
-		{ "color7",		STRING,	&selbgcolor },
+		{ "color8",		STRING,	&normbordercolor },
+		{ "color12",		STRING,	&selbordercolor },
+		{ "background",		STRING,	&normbgcolor },
+		{ "color5",		STRING,	&normfgcolor },
+		{ "color4",		STRING,	&selfgcolor },
+		{ "background",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
 		{ "showbar",		INTEGER, &showbar },
@@ -203,8 +203,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	/* { MODKEY,			XK_s,		togglesticky,	{0} }, */
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -i -l 13 -p 'Run: ' ") },
-	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -i -l 9") },
+	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu -c") },
+	{ MODKEY,			XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
 	{ MODKEY,			XK_g,		shiftview,	{ .i = -1 } },
