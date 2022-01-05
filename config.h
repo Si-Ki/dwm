@@ -15,7 +15,7 @@ static int swallowfloating    = 0;        /* 1 means swallow floating windows by
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=13:antialias=true:autohint=true" };
+static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=11:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=13:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -171,7 +171,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
-	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("maim -B -D -m 10 -s | xclip -selection clipboard -t image/png") },
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("maim -u -B -f png -m 1 -s | xclip -selection clipboard -t image/png") },
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
