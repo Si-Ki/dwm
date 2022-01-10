@@ -43,32 +43,32 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-/* static const char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: ", "6: ", "7", "8", "9: " }; */
-static const char *tags[] = { "", "", "", "", "", "", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; 
+/* static const char *tags[] = { "", "", "", "", "", "", "7", "8", "9" }; */
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	*/
-	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ "spotify",     NULL,       NULL,	    1 << 8,       0,           0,         0,        -1 },
-	{ "mpv",      NULL, 	  NULL, 	    1 << 3,	  0,	       0,	  0,	    1 },
-	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,	  0,	       0,	  0,	    -1 },
-	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,	  0,	       0,	  0,	    -1 },
-	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,	  0,	       0,	  0,	    0 },
-	{ "Steam",    NULL,	  NULL, 	    1 << 2,	  0,	       0,	  0,	    0 },
-	{ "TelegramDesktop", NULL, NULL,	    1 << 4,	  0,	       0,	  0,	    0 },
-	{ "discord", NULL, NULL,	    	    1 << 4,	  0,	       0,	  0,	    -1 },
-	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
-	{ "Brave-browser",    NULL,       NULL,     1 << 1,       0,           0,         0,        0 },
-	{ "Bitcoin-Qt",    NULL,       NULL,        1 << 8,       0,           0,         0,        -1 },
-	{ "obs",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
-	{ "openshot",	NULL,	NULL,		    1 << 8,	  0,	       0,	  0,	    -1 },
-	{ NULL,      "spblue",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ NULL,      "splf",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
-	{ NULL,      "spterm",    NULL,       	    SPTAG(2),     1,           1,         0,        -1 },
+	/* class    instance      title       	 tags mask   switchtotag  isfloating   isterminal  noswallow  monitor */
+	{ "Gimp",     NULL,       NULL,       	    1 << 8,  	0,		0,           0,         0,        -1 },
+	{ "spotify",     NULL,       NULL,	    1 << 8,  	0,	      	0,           0,         0,        -1 },
+	{ "mpv",      NULL, 	  NULL, 	    1 << 3,  	1,      	0,	     0,	  	0,	  1 },
+	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
+	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
+	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,  	0,      	0,	     0,	  	0,	  0 },
+	{ "Steam",    NULL,	  NULL, 	    1 << 2,  	0,      	0,	     0,	  	0,	  0 },
+	{ "TelegramDesktop", NULL, NULL,	    1 << 4,  	1,      	0,	     0,	  	0,	  0 },
+	{ "discord", NULL, NULL,	    	    1 << 4,  	0,      	0,	     0,	  	0,	  -1 },
+	{ TERMCLASS,  NULL,       NULL,       	    0,       	0,      	0,           1,         0,        -1 },
+	{ "Brave-browser",    NULL,       NULL,     1 << 1,  	1,      	0,           0,         0,        0 },
+	{ "Bitcoin-Qt",    NULL,       NULL,        1 << 8,  	0,      	0,           0,         0,        -1 },
+	{ "obs",	NULL,	NULL,		    1 << 8,  	0,      	0,	     0,	  	0,	  -1 },
+	{ "openshot",	NULL,	NULL,		    1 << 8,  	0,      	0,	     0,	  	0,	  -1 },
+	{ NULL,      "spblue",    NULL,       	    SPTAG(0),	0,      	1,           1,         0,        -1 },
+	{ NULL,      "splf",    NULL,       	    SPTAG(1),	0,      	1,           1,         0,        -1 },
+	{ NULL,      "spterm",    NULL,       	    SPTAG(2),	0,      	1,           1,         0,        -1 },
 };
 
 /* layout(s) */
@@ -178,7 +178,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
-	{ MODKEY,			XK_r,		spawn,		SHCMD("thunar") },
+	/*{ MODKEY,			XK_r,		spawn,		SHCMD("thunar") },*/
 	{ ControlMask,			XK_Escape,	spawn,		SHCMD(TERMINAL " -e htop") },
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[1]} }, /* bstack */
@@ -201,7 +201,7 @@ static Key keys[] = {
 
 	{ MODKEY,			XK_a,		togglegaps,	{0} },
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
-	/* { MODKEY,			XK_s,		togglesticky,	{0} }, */
+	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
 	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -i -l 9") },
 	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu -c") },
@@ -219,7 +219,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 2} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY,			XK_s,		togglescratch,	{.ui = 1} },
+	{ MODKEY,			XK_r,		togglescratch,	{.ui = 1} },
 
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
