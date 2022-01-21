@@ -5,12 +5,12 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 5;        /* horiz inner gap between windows */
-static unsigned int gappiv    = 5;        /* vert inner gap between windows */
-static unsigned int gappoh    = 5;        /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 5;        /* vert outer gap between windows and screen edge */
+static unsigned int borderpx  = 0;        /* border pixel of windows */
+static unsigned int snap      = 10;       /* snap pixel */
+static unsigned int gappih    = 8;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 8;        /* vert inner gap between windows */
+static unsigned int gappoh    = 8;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 8;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
@@ -43,8 +43,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; 
-/* static const char *tags[] = { "", "", "", "", "", "", "7", "8", "9" }; */
+/*static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };*/
+static const char *tags[] = { "", "", "", "", "", "VM", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -54,18 +54,18 @@ static const Rule rules[] = {
 	/* class    instance      title       	 tags mask   switchtotag  isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,  	0,		0,           0,         0,        -1 },
 	{ "spotify",     NULL,       NULL,	    1 << 8,  	0,	      	0,           0,         0,        -1 },
-	{ "mpv",      NULL, 	  NULL, 	    1 << 3,  	1,      	0,	     0,	  	0,	  1 },
+	{ "mpv",      NULL, 	  NULL, 	    0,  	1,      	0,	     0,	  	0,	  1 },
 	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
 	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
 	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,  	0,      	0,	     0,	  	0,	  0 },
 	{ "Steam",    NULL,	  NULL, 	    1 << 2,  	0,      	0,	     0,	  	0,	  0 },
 	{ "TelegramDesktop", NULL, NULL,	    1 << 4,  	1,      	0,	     0,	  	0,	  0 },
-	{ "discord", NULL, NULL,	    	    1 << 4,  	0,      	0,	     0,	  	0,	  -1 },
+	{ "discord", NULL, NULL,	    	    1 << 4,  	1,      	0,	     0,	  	0,	  -1 },
 	{ TERMCLASS,  NULL,       NULL,       	    0,       	0,      	0,           1,         0,        -1 },
 	{ "Brave-browser",    NULL,       NULL,     1 << 1,  	1,      	0,           0,         0,        0 },
 	{ "Bitcoin-Qt",    NULL,       NULL,        1 << 8,  	0,      	0,           0,         0,        -1 },
 	{ "obs",	NULL,	NULL,		    1 << 8,  	0,      	0,	     0,	  	0,	  -1 },
-	{ "openshot",	NULL,	NULL,		    1 << 8,  	0,      	0,	     0,	  	0,	  -1 },
+	{ "Nitrogen",	NULL,	NULL,		    0,  	0,      	1,	     0,	  	0,	  -1 },
 	{ NULL,      "spblue",    NULL,       	    SPTAG(0),	0,      	1,           1,         0,        -1 },
 	{ NULL,      "splf",    NULL,       	    SPTAG(1),	0,      	1,           1,         0,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(2),	0,      	1,           1,         0,        -1 },
@@ -82,7 +82,7 @@ static const Layout layouts[] = {
 	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
-	{ "",	spiral },		    /* Fibonacci spiral */
+	{ "",		spiral },               /* Fibonacci spiral */
 	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
 
 	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
@@ -122,7 +122,7 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  */
 ResourcePref resources[] = {
 		{ "color8",		STRING,	&normbordercolor },
-		{ "color12",		STRING,	&selbordercolor },
+		{ "color7",		STRING,	&selbordercolor },
 		{ "background",		STRING,	&normbgcolor },
 		{ "color4",		STRING,	&normfgcolor },
 		{ "color6",		STRING,	&selfgcolor },
@@ -203,8 +203,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -c -i -l 9") },
-	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu -c") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i") },
+	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu") },
 	{ MODKEY,			XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
@@ -222,7 +222,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_r,		togglescratch,	{.ui = 1} },
 
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
-	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("share") },
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
 	/* { MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("") }, */
 	/* { MODKEY,			XK_c,		spawn,		SHCMD("") }, */
@@ -231,7 +231,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_b,		togglebar,	{0} },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e nvim -c VimwikiIndex") },
-	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
+/*	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },*/
+	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD("notflix") },
 	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncplayerctlpp") },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,			XK_comma,	spawn,		SHCMD("playerctl prev") },
@@ -271,8 +272,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 1; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 1; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next") },
 	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause") },
