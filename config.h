@@ -44,7 +44,7 @@ static Sp scratchpads[] = {
 
 /* tagging */
 /*static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };*/
-static const char *tags[] = { "", "", "", "", "", "VM", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "VM", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -54,7 +54,7 @@ static const Rule rules[] = {
 	/* class    instance      title       	 tags mask   switchtotag  isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,  	0,		0,           0,         0,        -1 },
 	{ "spotify",     NULL,       NULL,	    1 << 8,  	0,	      	0,           0,         0,        -1 },
-	{ "mpv",      NULL, 	  NULL, 	    0,  	1,      	0,	     0,	  	0,	  1 },
+	{ "mpv",      NULL, 	  NULL, 	    1 << 3,  	1,      	0,	     0,	  	0,	  -1 },
 	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
 	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
 	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,  	0,      	0,	     0,	  	0,	  0 },
@@ -66,6 +66,7 @@ static const Rule rules[] = {
 	{ "Bitcoin-Qt",    NULL,       NULL,        1 << 8,  	0,      	0,           0,         0,        -1 },
 	{ "obs",	NULL,	NULL,		    1 << 8,  	0,      	0,	     0,	  	0,	  -1 },
 	{ "Nitrogen",	NULL,	NULL,		    0,  	0,      	1,	     0,	  	0,	  -1 },
+	{ "sxiv",	NULL,	NULL,		    0,  	0,      	0,	     1,	  	0,	  -1 },
 	{ NULL,      "spblue",    NULL,       	    SPTAG(0),	0,      	1,           1,         0,        -1 },
 	{ NULL,      "splf",    NULL,       	    SPTAG(1),	0,      	1,           1,         0,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(2),	0,      	1,           1,         0,        -1 },
@@ -125,7 +126,7 @@ ResourcePref resources[] = {
 		{ "color7",		STRING,	&selbordercolor },
 		{ "background",		STRING,	&normbgcolor },
 		{ "color4",		STRING,	&normfgcolor },
-		{ "color6",		STRING,	&selfgcolor },
+		{ "color9",		STRING,	&selfgcolor },
 		{ "background",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
@@ -203,7 +204,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i -p 'dmenu: '") },
 	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu") },
 	{ MODKEY,			XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
