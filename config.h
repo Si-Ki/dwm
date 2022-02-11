@@ -5,17 +5,17 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static unsigned int borderpx  = 0;        /* border pixel of windows */
+static unsigned int borderpx  = 3;        /* border pixel of windows */
 static unsigned int snap      = 10;       /* snap pixel */
-static unsigned int gappih    = 8;        /* horiz inner gap between windows */
-static unsigned int gappiv    = 8;        /* vert inner gap between windows */
-static unsigned int gappoh    = 8;        /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 8;        /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 6;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 6;        /* vert inner gap between windows */
+static unsigned int gappoh    = 6;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 6;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "SourceCodePro-Regular:size=10","JoyPixels:pixelsize=11:antialias=true:autohint=true", "Font Awesome 5 Brands-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Regular-400:pixelsize=13:antialias=true:autohint=true", "Font Awesome 5 Free-Solid-900:pixelsize=13:antialias=true:autohint=true" };
+static char *fonts[]          = { "JetBrainsMono-Medium:size=11","JoyPixels:pixelsize=11:antialias=true:autohint=true", "fa-regular-400:pixelsize=13:antialias=true:autohint=true", "fa-brands-400:pixelsize=13:antialias=true:autohint=true", "fa-solid-900:pixelsize=13:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -44,7 +44,7 @@ static Sp scratchpads[] = {
 
 /* tagging */
 /*static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };*/
-static const char *tags[] = { "", "", "", "", "", "VM", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "VM", "Extras" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -52,24 +52,20 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	*/
 	/* class    instance      title       	 tags mask   switchtotag  isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,  	0,		0,           0,         0,        -1 },
-	{ "spotify",     NULL,       NULL,	    1 << 8,  	0,	      	0,           0,         0,        -1 },
-	{ "mpv",      NULL, 	  NULL, 	    1 << 3,  	1,      	0,	     0,	  	0,	  -1 },
-	{ "VirtualBox Manager", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
-	{ "VirtualBox Machine", NULL, NULL,	    1 << 5,  	0,      	0,	     0,	  	0,	  -1 },
-	{ "csgo_linux64",    NULL,	  NULL,     1 << 2,  	0,      	0,	     0,	  	0,	  0 },
-	{ "Steam",    NULL,	  NULL, 	    1 << 2,  	0,      	0,	     0,	  	0,	  0 },
-	{ "TelegramDesktop", NULL, NULL,	    1 << 4,  	1,      	0,	     0,	  	0,	  0 },
-	{ "discord", NULL, NULL,	    	    1 << 4,  	1,      	0,	     0,	  	0,	  -1 },
-	{ TERMCLASS,  NULL,       NULL,       	    0,       	0,      	0,           1,         0,        -1 },
-	{ "Brave-browser",    NULL,       NULL,     1 << 1,  	1,      	0,           0,         0,        0 },
-	{ "Bitcoin-Qt",    NULL,       NULL,        1 << 8,  	0,      	0,           0,         0,        -1 },
-	{ "obs",	NULL,	NULL,		    1 << 8,  	0,      	0,	     0,	  	0,	  -1 },
-	{ "Nitrogen",	NULL,	NULL,		    0,  	0,      	1,	     0,	  	0,	  -1 },
-	{ "sxiv",	NULL,	NULL,		    0,  	0,      	0,	     1,	  	0,	  -1 },
-	{ NULL,      "spblue",    NULL,       	    SPTAG(0),	0,      	1,           1,         0,        -1 },
-	{ NULL,      "splf",    NULL,       	    SPTAG(1),	0,      	1,           1,         0,        -1 },
-	{ NULL,      "spterm",    NULL,       	    SPTAG(2),	0,      	1,           1,         0,        -1 },
+	{ "Gimp",     NULL,       NULL,       	    1 << 5,  	0,			0,           	0,         	0,      -1 },
+	{ "mpv",      NULL, 	  NULL, 	    	1 << 3,  	1,      	0,	     		0,	  		0,	  	-1 },
+	{ "VirtualBox Manager", NULL, NULL,	    	1 << 4,  	0,      	0,	     		0,	  		0,	    -1 },
+	{ "VirtualBox Machine", NULL, NULL,	    	1 << 4,  	0,      	0,	     		0,	  		0,	    -1 },
+	{ "TelegramDesktop", NULL, NULL,	    	1 << 2,  	1,      	0,	     		0,	  		0,	     0 },
+	{ "discord", NULL, NULL,	    	    	1 << 2,  	1,      	0,	     		0,	  		0,	     0 },
+	{ TERMCLASS,  NULL,       NULL,       	    0,       	0,      	0,           	1,         	0,      -1 },
+	{ "Brave-browser",    NULL,       NULL,     1 << 1,  	1,      	0,           	0,         	0,       0 },
+	{ "obs",	NULL,	NULL,		    		1 << 5,  	0,      	0,	     		0,	  		0,	    -1 },
+	{ "Nitrogen",	NULL,	NULL,		    	0,  		0,      	1,	     		0,	  		0,	    -1 },
+	{ "sxiv",	NULL,	NULL,		    		0,  		0,      	0,	     		1,	  		0,	    -1 },
+	{ NULL,      "spblue",    NULL,       	    SPTAG(0),	0,      	1,       	    1,         	0,      -1 },
+	{ NULL,      "splf",    NULL,       	    SPTAG(1),	0,      	1,       	    1,         	0,      -1 },
+	{ NULL,      "spterm",    NULL,       	    SPTAG(2),	0,      	1,           	1,         	0,      -1 },
 };
 
 /* layout(s) */
@@ -80,7 +76,7 @@ static int resizehints = 0;    /* 1 means respect size hints in tiled resizals *
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
+	{ "",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
 	{ "",		spiral },               /* Fibonacci spiral */
@@ -159,9 +155,6 @@ static Key keys[] = {
 	TAGKEYS(			XK_4,		3)
 	TAGKEYS(			XK_5,		4)
 	TAGKEYS(			XK_6,		5)
-	TAGKEYS(			XK_7,		6)
-	TAGKEYS(			XK_8,		7)
-	TAGKEYS(			XK_9,		8)
 	{ MODKEY,			XK_0,		view,		{.ui = ~0 } },
 	{ MODKEY|ShiftMask,		XK_0,		tag,		{.ui = ~0 } },
 	{ MODKEY,			XK_minus,	spawn,		SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },
@@ -172,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
-	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("maim -u -B -f jpg -m 10 -s | xclip -selection clipboard -t image/png") },
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("maim -u -s -m 10 | xclip -sel c -t image/png") },
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
@@ -204,7 +197,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i -p 'dmenu: '") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i -p 'RUN: '") },
 	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu") },
 	{ MODKEY,			XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
@@ -235,7 +228,7 @@ static Key keys[] = {
 /*	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },*/
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD("notflix") },
 	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncplayerctlpp") },
-	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("muteunmute") },
 	{ MODKEY,			XK_comma,	spawn,		SHCMD("playerctl prev") },
 	{ MODKEY|ShiftMask,		XK_comma,	spawn,		SHCMD("playerctl seek 0%") },
 	{ MODKEY,			XK_period,	spawn,		SHCMD("playerctl next") },
@@ -279,7 +272,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next") },
 	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD(TERMINAL " -e ncplayerctlpp") },
-	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+/*	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") }, */
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD(TERMINAL " -e bc -l") },
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
