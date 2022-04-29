@@ -1,21 +1,22 @@
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
+#define BROWSER "firefox"
 
-//* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
+/* appearance */
+static unsigned int borderpx  = 3;        /* border pixel of windows */
 static unsigned int snap      = 10;       /* snap pixel */
-static unsigned int gappih    = 6;        /* horiz inner gap between windows */
-static unsigned int gappiv    = 6;        /* vert inner gap between windows */
-static unsigned int gappoh    = 6;        /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 6;        /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 4;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 4;        /* vert inner gap between windows */
+static unsigned int gappoh    = 4;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 4;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static const int vertpad      = 5;       /* vertical padding of bar */
-static const int sidepad      = 5;       /* horizontal padding of bar */
-static char *fonts[]          = { "JetBrainsMono-Medium:size=11", "Font Awesome 6 Free:pixelsize=14:antialias=true:autohint=true", "Font Awesome 6 Brands:pixelsize=14:antialias=true:autohint=true", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
+static const int vertpad      = 0;       /* vertical padding of bar */
+static const int sidepad      = 0;       /* horizontal padding of bar */
+static char *fonts[]          = { "JetBrainsMono-Medium:size=11", "Font Awesome 6 Free:pixelsize=13:antialias=true:autohint=true", "Font Awesome 6 Brands:pixelsize=13:antialias=true:autohint=true", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -55,10 +56,9 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       	    1 << 5,  	0,		0,           	0,       0,      -1 },
 	{ "mpv",      NULL, 	  NULL, 	    1 << 3,  	0,      	0,	     	0,	 0,	 -1 },
 	{ "TelegramDesktop", NULL, NULL,	    1 << 2,  	1,      	0,	     	0,	 0,	  1 },
-	{ "discord", NULL, NULL,	    	    1 << 2,  	1,      	0,	     	0,	 0,	  1 },
 	{ "Zathura", NULL, NULL,	    	    1 << 4,  	1,      	0,	     	0,	 0,	  1 },
 	{ TERMCLASS,  NULL,       NULL,       	    0,       	0,      	0,           	1,       0,      -1 },
-	{ "Brave-browser",    NULL,       NULL,     1 << 1,  	1,      	0,           	0,       0,      -1 },
+	{ BROWSER,    NULL,       NULL,     1 << 1,  	1,      	0,           	0,       0,      -1 },
 	{ "Nitrogen",	NULL,	NULL,		    0,  	0,      	1,	     	0,	 0,	  1 },
 	{ NULL,      "spblue",    NULL,       	    SPTAG(0),	0,      	1,       	1,       0,      -1 },
 	{ NULL,      "spnotes",    NULL,       	    SPTAG(1),	0,      	1,       	1,       0,      -1 },
@@ -116,10 +116,10 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  */
 ResourcePref resources[] = {
 		{ "color8",		STRING,	&normbordercolor },
-		{ "color12",		STRING,	&selbordercolor },
+		{ "piiink",		STRING,	&selbordercolor },
 		{ "background",		STRING,	&normbgcolor },
-		{ "color4",		STRING,	&normfgcolor },
-		{ "color2",		STRING,	&selfgcolor },
+		{ "piiink",		STRING,	&normfgcolor },
+		{ "foreground",		STRING,	&selfgcolor },
 		{ "background",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
@@ -165,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("maim -u -s -f png -m 10 | xclip -sel c -t image/png") },
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
-	{ MODKEY,			XK_w,		spawn,		SHCMD("brave") },
+	{ MODKEY,			XK_w,		spawn,		SHCMD(BROWSER) },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
@@ -194,10 +194,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i -p 'RUN: '") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i") },
 	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu -l 10") },
-	{ MODKEY,			XK_d,		spawn,		SHCMD("discord") },
-	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu") },
+	{ MODKEY,			XK_d,		spawn,		SHCMD("firefox https://discord.com/channels/@me") },
+	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu --type") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
 	{ MODKEY,			XK_Left,		shiftview,	{ .i = -1 } },
