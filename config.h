@@ -1,22 +1,22 @@
-/* Constants */
+//* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
 #define BROWSER "firefox"
 
-/* appearance */
-static unsigned int borderpx  = 3;        /* border pixel of windows */
+//* appearance */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 10;       /* snap pixel */
-static unsigned int gappih    = 4;        /* horiz inner gap between windows */
-static unsigned int gappiv    = 4;        /* vert inner gap between windows */
-static unsigned int gappoh    = 4;        /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 4;        /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 6;        /* horiz inner gap between windows */
+static unsigned int gappiv    = 6;        /* vert inner gap between windows */
+static unsigned int gappoh    = 6;        /* horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 6;        /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad      = 0;       /* vertical padding of bar */
 static const int sidepad      = 0;       /* horizontal padding of bar */
-static char *fonts[]          = { "JetBrainsMono-Medium:size=11", "Font Awesome 6 Free:pixelsize=13:antialias=true:autohint=true", "Font Awesome 6 Brands:pixelsize=13:antialias=true:autohint=true", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
+static char *fonts[]          = { "JetBrainsMono:size=11", "Font Awesome 6 Free:pixelsize=13:antialias=true:autohint=true", "Font Awesome 6 Brands:pixelsize=13:antialias=true:autohint=true", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -115,11 +115,11 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color8",		STRING,	&normbordercolor },
-		{ "piiink",		STRING,	&selbordercolor },
+		{ "color0",		STRING,	&normbordercolor },
+		{ "color20",		STRING,	&selbordercolor },
 		{ "background",		STRING,	&normbgcolor },
-		{ "piiink",		STRING,	&normfgcolor },
-		{ "foreground",		STRING,	&selfgcolor },
+		{ "color20",		STRING,	&normfgcolor },
+		{ "selborder",		STRING,	&selfgcolor },
 		{ "background",		STRING,	&selbgcolor },
 		{ "borderpx",		INTEGER, &borderpx },
 		{ "snap",		INTEGER, &snap },
@@ -144,7 +144,7 @@ static Key keys[] = {
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY|ShiftMask,		XK_h,	spawn,	SHCMD("dmenuhandler") },
-	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
+	{ MODKEY,			XK_grave,	spawn,	SHCMD("rofi -show emoji") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	TAGKEYS(			XK_1,		0)
 	TAGKEYS(			XK_2,		1)
@@ -167,10 +167,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("telegram-desktop") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD(BROWSER) },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
-	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
+	/*{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },*/
+	{ MODKEY,			XK_e,		spawn,		SHCMD("emotes") },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
 	/*{ MODKEY,			XK_r,		spawn,		SHCMD("thunar") },*/
-	{ ControlMask,			XK_Escape,	spawn,		SHCMD(TERMINAL " -e htop") },
+	{ ControlMask,			XK_Escape,	spawn,		SHCMD(TERMINAL " -e btop") },
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[1]} }, /* bstack */
 	{ MODKEY,			XK_y,		setlayout,	{.v = &layouts[2]} }, /* spiral */
@@ -194,7 +195,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
-	{ Mod1Mask,			XK_space,	spawn,          SHCMD("dmenu_run -i") },
+	{ Mod1Mask,			XK_space,	spawn,          SHCMD("rofi -show drun") },
 	{ MODKEY,			XK_v,		spawn,          SHCMD("clipmenu -l 10") },
 	{ MODKEY,			XK_d,		spawn,		SHCMD("firefox https://discord.com/channels/@me") },
 	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu --type") },
@@ -277,7 +278,7 @@ static Key keys[] = {
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("Brave-browser") },
 	{ 0, XF86XK_DOS,		spawn,		SHCMD(TERMINAL) },
-	{ MODKEY,	XK_Escape,	spawn,		SHCMD("gpg-connect-agent --no-autostart reloadagent /bye && slock & xset dpms force off;") },
+	{ MODKEY,	XK_Escape,	spawn,		SHCMD("gpg-connect-agent --no-autostart reloadagent /bye && slock") },
 	{ 0, XF86XK_TaskPane,		spawn,		SHCMD(TERMINAL " -e htop") },
 	{ 0, XF86XK_Mail,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ 0, XF86XK_MyComputer,		spawn,		SHCMD(TERMINAL " -e lf /") },
