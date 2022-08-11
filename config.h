@@ -1,10 +1,10 @@
-//* Constants */
+/* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
 #define BROWSER "firefox"
 
-//* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
+/* appearance */
+static unsigned int borderpx  = 0;        /* border pixel of windows */
 static unsigned int snap      = 10;       /* snap pixel */
 static unsigned int gappih    = 6;        /* horiz inner gap between windows */
 static unsigned int gappiv    = 6;        /* vert inner gap between windows */
@@ -14,9 +14,9 @@ static int swallowfloating    = 0;        /* 1 means swallow floating windows by
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static const int vertpad      = 0;       /* vertical padding of bar */
-static const int sidepad      = 0;       /* horizontal padding of bar */
-static char *fonts[]          = { "JetBrainsMono:size=11", "Font Awesome 6 Free:pixelsize=13:antialias=true:autohint=true", "Font Awesome 6 Brands:pixelsize=13:antialias=true:autohint=true", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
+static const int vertpad      = 5;        /* vertical padding of bar */
+static const int sidepad      = 8;        /* horizontal padding of bar */
+static char *fonts[]          = { "Iosevka Nerd Font:pixelsize=13", "Material Icons:pixelsize=14" };
 static char normbgcolor[]           = "#272822";
 static char normbordercolor[]       = "#ffef00";
 static char normfgcolor[]           = "#00ffff";
@@ -45,7 +45,7 @@ static Sp scratchpads[] = {
 
 /* tagging */
 /*static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };*/
-static const char *tags[] = { "", "", "", "", "", "Extras" };
+static const char *tags[] = { "/home", "🔗", "💬", "", "🧾", "/tmp" };
 
 static const Rule rules[] = {
 	/* xprop(1):
