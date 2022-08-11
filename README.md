@@ -1,3 +1,3 @@
 # DWM 
 
-<img src="https://github.com/Si-Ki/dwm/blob/main/screenshot.png"
+<img src="https://github.com/Si-Ki/dwm/blob/main/screenshot.png?raw=true">
