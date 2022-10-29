@@ -24,13 +24,15 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           1 << 8,    0,          0,           0,        -1 },
-	{ "firefox", NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
-	{ "discord", NULL,     NULL,           1 << 2,    0,          0,          -1,        -1 },
-	{ "TelegramDesktop", NULL, NULL,      1 << 2,    0,          0,          -1,        -1 },
-	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class     instance  title           tags mask switch isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     NULL,           1 << 8,      0,      0,          0,           0,        -1 },
+	{ "firefox", NULL,     NULL,           1 << 1,      0,      0,          0,          -1,        -1 },
+	{ "discord", NULL,     NULL,           1 << 2,      0,      0,          0,          -1,        -1 },
+	{ "epyterm", NULL,     NULL,           1 << 4,      1,      0,          0,          -1,        -1 },
+	{ "zathura", NULL,     NULL,           1 << 4,      1,      0,          0,          -1,        -1 },
+	{ "TelegramDesktop", NULL, NULL,       1 << 2,      0,      0,          0,          -1,        -1 },
+	{ "st",      NULL,     NULL,           0,           0,      0,          1,           0,        -1 },
+	{ NULL,      NULL,     "Event Tester", 0,           0,      0,          0,           1,        -1 }, /* xev */
  };
 
 /* layout(s) */
@@ -67,8 +69,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.03} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.03} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
