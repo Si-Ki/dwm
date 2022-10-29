@@ -25,14 +25,16 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* class     instance  title           tags mask switch isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           1 << 8,      0,      0,          0,           0,        -1 },
-	{ "firefox", NULL,     NULL,           1 << 1,      0,      0,          0,          -1,        -1 },
-	{ "discord", NULL,     NULL,           1 << 2,      0,      0,          0,          -1,        -1 },
-	{ "epyterm", NULL,     NULL,           1 << 4,      1,      0,          0,          -1,        -1 },
-	{ "zathura", NULL,     NULL,           1 << 4,      1,      0,          0,          -1,        -1 },
-	{ "TelegramDesktop", NULL, NULL,       1 << 2,      0,      0,          0,          -1,        -1 },
-	{ "st",      NULL,     NULL,           0,           0,      0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,           0,      0,          0,           1,        -1 }, /* xev */
+	{ "Gimp",    NULL,     NULL,           1 << 8,      0,      0,          0,           0,        -1,    0 },
+	{ "firefox", NULL,     NULL,           1 << 1,      0,      0,          0,           0,        -1,    0 },
+	{ "discord", NULL,     NULL,           1 << 2,      0,      0,          0,           0,        -1,    0 },
+	{ "TelegramDesktop", NULL, NULL,       1 << 2,      0,      0,          0,           0,        -1,    0 },
+	{ "mpv",     NULL,     NULL,           1 << 3,      0,      0,          0,           0,        -1,    0 },
+	{ "epyterm", NULL,     NULL,           1 << 4,      1,      0,          1,           0,        -1,    0 },
+	{ "zathura", NULL,     NULL,           1 << 4,      1,      0,          0,           0,        -1,    0 },
+	{ "St",      NULL,     NULL,           0,           0,      0,          1,           0,        -1,    0 },
+	{ NULL,      NULL,     "Event Tester", 0,           0,      0,          0,           1,        -1,    0 },
+	{ NULL,      NULL,     "stfloat",      0,           0,      1,          1,           0,        -1,   's' },
  };
 
 /* layout(s) */
@@ -64,9 +66,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
+/*First arg only serves to match against key in rules*/
+static const char *scratchpadcmd[] = {"s", "st", "-t", "stfloat", NULL}; 
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_Return, togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
